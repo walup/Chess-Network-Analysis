@@ -444,6 +444,53 @@ class ChessBoard:
         self.gameEnded = False
         self.executedMoves = []
     
+    def getMaterial(self):
+        
+        nPieces = len(self.pieces)
+        material = 0
+        for i in range(0,nPieces):
+            sign = 1
+            piece = self.pieces[i]
+            if(piece.pieceColor == PieceColor.BLACK):
+                sign = -1
+            
+            if(piece.pieceType == PieceType.PAWN):
+                material = material + sign*1
+            
+            elif(piece.pieceType == PieceType.BISHOP or piece.pieceType == PieceType.KNIGHT):
+                material = material + sign*3
+            
+            elif(piece.pieceType == PieceType.ROOK):
+                material = material + sign*5
+            
+            elif(piece.pieceType == PieceType.QUEEN):
+                material = material + sign*9
+        
+        return material
+    
+    def getSpace(self, color):
+        enemyRanks = ["5","6","7","8"]
+        if(color == PieceColor.BLACK):
+            enemyRanks = ["1","2","3","4"]
+        
+        nPieces = len(self.pieces)
+        space = 0
+        registered = []
+        for i in range(0,nPieces):
+            piece = self.pieces[i]
+            if(piece.pieceColor == color):
+                #Get the vision
+                visionFiles, visionRanks, takes = self.getPieceBoardVision(piece.pieceType,piece.file, piece.rank, piece.moveCounter, color)
+                for j in range(0,len(visionRanks)):
+                    position = [visionFiles[j], visionRanks[j]]
+                    if(visionRanks[j] in enemyRanks and (not position in registered)):
+                        space = space + 1
+                        registered.append(position)
+        
+        return space
+                        
+            
+    
     def isOccupied(self, file, rank):
         for i in range(0,len(self.pieces)):
             if(self.pieces[i].file == file and self.pieces[i].rank == rank):
