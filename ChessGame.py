@@ -287,7 +287,7 @@ class ChessPiece:
                     takes = ""
                     if(takesArray[i] == True):
                         takes = "x"
-                        if(self.pieceType == PieceType.PAWN):
+                        if(self.pieceType == PieceType.PAWN and fromFile == ""):
                             pieceType = self.file
                     
                     
@@ -417,7 +417,7 @@ class ChessPiece:
                     takes = ""
                     if(takesArray[i] == True):
                         takes = "x"
-                        if(self.pieceType == PieceType.PAWN):
+                        if(self.pieceType == PieceType.PAWN and fromFile == ""):
                             pieceType = self.file
                     
                     castleMove = ""
