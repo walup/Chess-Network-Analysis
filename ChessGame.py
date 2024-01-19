@@ -1257,6 +1257,7 @@ class ChessBoard:
     
     def makeMove(self, moveString):
         pieceColorToMove = PieceColor(self.moveNumber % 2)
+        self.toMoveColor = pieceColorToMove
         madeMove = False
         check = False
         checkmate = False
